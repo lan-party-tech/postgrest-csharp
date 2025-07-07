@@ -13,7 +13,7 @@ namespace PostgrestTests
     [TestClass]
     public class LinqTests
     {
-        private const string BaseUrl = "http://localhost:3000";
+        private const string BaseUrl = "http://localhost:54321/rest/v1";
 
         [TestMethod("Linq: Select")]
         public async Task TestLinqSelect()
@@ -123,14 +123,17 @@ namespace PostgrestTests
                 .Get();
 
             await client.Table<KitchenSink>()
+                .Where(x => x.DateTimeValue == null)
                 .Set(x => x.BooleanValue!, true)
                 .Update();
 
             await client.Table<KitchenSink>()
+                .Where(x => x.DateTimeValue == null)
                 .Set(x => x.BooleanValue, true)
                 .Update();
 
             await client.Table<KitchenSink>()
+                .Where(x => x.DateTimeValue == null)
                 .Set(x => x.StringValue!, null)
                 .Update();
         }

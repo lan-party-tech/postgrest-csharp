@@ -1,13 +1,7 @@
-<p align="center">
-<img width="300" src=".github/logo.png"/>
-</p>
+# Supabase.Postgrest
 
-<p align="center">
-  <img src="https://github.com/supabase/postgrest-csharp/workflows/Build%20And%20Test/badge.svg"/>
-  <a href="https://www.nuget.org/packages/Supabase.Postgrest/">
-    <img src="https://img.shields.io/nuget/vpre/Supabase.Postgrest"/>
-  </a>
-</p>
+[![Build and Test](https://github.com/supabase-community/postgrest-csharp/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/supabase-community/postgrest-csharp/acionts/workflows/build-and-test.yml)
+[![NuGet](https://img.shields.io/nuget/vpre/Supabase.Postgrest)](https://www.nuget.org/packages/Supabase.Postgrest/)
 
 ---
 
@@ -32,7 +26,7 @@ await client.Table<Movie>()
 
 ---
 
-Documentation can be found [here](https://supabase-community.github.io/postgrest-csharp/api/Postgrest.html).
+Documentation can be found [here](https://supabase-community.github.io/postgrest-csharp/api/Supabase.Postgrest.html).
 
 Postgrest-csharp is written primarily as a helper library
 for [supabase/supabase-csharp](https://github.com/supabase/supabase-csharp), however, it should be easy enough to use

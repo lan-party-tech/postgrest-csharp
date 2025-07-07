@@ -12,7 +12,7 @@ namespace PostgrestTests
     [TestClass]
     public class ReferenceTests
     {
-        private const string BaseUrl = "http://localhost:3000";
+        private const string BaseUrl = "http://localhost:54321/rest/v1";
 
         [TestMethod("Reference: Returns linked models on a root model.")]
         public async Task TestReferenceReturnsLinkedModels()
@@ -36,6 +36,7 @@ namespace PostgrestTests
                 .Single();
 
             Assert.IsNotNull(person2?.Profile);
+            Assert.IsTrue(person2.Profile.Email!.Contains("bob"));
 
             var byEmail = await client.Table<Person>()
                 .Order(x => x.CreatedAt, Ordering.Ascending)
@@ -43,6 +44,26 @@ namespace PostgrestTests
                 .Single();
 
             Assert.IsNotNull(byEmail);
+
+            var product = await client.Table<Product>()
+                .Filter("id", Operator.Equals, "8b8e89a0-63c7-4917-8dc1-7797dc0285f1")
+                .Single();
+
+            Assert.IsNotNull(product);
+            Assert.AreEqual("product 1", product.Name);
+            
+            Assert.IsNotNull(product.Category);
+            Assert.AreEqual("999e4b26-91a8-4ea4-af2c-77a3540f7843", product.Category.Id.ToString());
+            Assert.AreEqual("category 1", product.Category.Name);
+            
+            var products = await client.Table<Product>()
+                .Get();
+            Assert.IsNotNull(products.Models);
+            Assert.IsTrue(products.Models.Count == 3);
+            
+            var productFiltered = products.Models.Find(x => x.Id.ToString() == "8b8e89a0-63c7-4917-8dc1-7797dc0285f1");
+            Assert.AreEqual("999e4b26-91a8-4ea4-af2c-77a3540f7843", productFiltered?.Category?.Id.ToString());
+            Assert.AreEqual("category 1", productFiltered?.Category?.Name);
         }
 
         [TestMethod("Reference: Can create linked records.")]

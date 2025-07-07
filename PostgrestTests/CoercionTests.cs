@@ -11,7 +11,7 @@ namespace PostgrestTests;
 [TestClass]
 public class CoercionTests
 {
-    private const string BaseUrl = "http://localhost:3000";
+    private const string BaseUrl = "http://localhost:54321/rest/v1";
 
     [TestMethod("Coercion: Can coerce primitive types")]
     public async Task CanCoercePrimitiveTypes()

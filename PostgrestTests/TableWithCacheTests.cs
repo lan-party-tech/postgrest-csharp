@@ -62,7 +62,7 @@ namespace PostgrestTests
     [TestClass]
     public class TableWithCacheTests
     {
-        private const string BaseUrl = "http://localhost:3000";
+        private const string BaseUrl = "http://localhost:54321/rest/v1";
 
         [TestMethod("Table: Can construct with Caching Provider and raise events.")]
         public async Task TestCacheWorksWithGetRequests()
