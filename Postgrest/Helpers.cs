@@ -62,8 +62,6 @@ namespace Supabase.Postgrest
             var builder = new UriBuilder(url);
             var query = HttpUtility.ParseQueryString(builder.Query);
 
-            UnityEngine.Debug.Log(query);
-
             if (data != null && method == HttpMethod.Get)
             {
                 // Case if it's a Get request the data object is a dictionary<string,string>
@@ -73,12 +71,9 @@ namespace Supabase.Postgrest
                         query[param.Key] = param.Value;
                 }
             }
-            UnityEngine.Debug.Log(data);
 
             builder.Query = query.ToString();
 
-            UnityEngine.Debug.Log(method);
-            UnityEngine.Debug.Log(builder.Uri);
             using var requestMessage = new HttpRequestMessage(method, builder.Uri);
 
             if (data != null && method != HttpMethod.Get)
@@ -90,7 +85,6 @@ namespace Supabase.Postgrest
                     requestMessage.Content = new StringContent(stringContent, Encoding.UTF8, "application/json");
                 }
             }
-            UnityEngine.Debug.Log(requestMessage);
 
             if (headers != null)
             {
@@ -99,12 +93,9 @@ namespace Supabase.Postgrest
                     requestMessage.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value);
                 }
             }
-            UnityEngine.Debug.Log(headers);
 
             using var response = await Client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
-            UnityEngine.Debug.Log(response);
             var content = await response.Content.ReadAsStringAsync();
-            UnityEngine.Debug.Log(content);
 
             if (response.IsSuccessStatusCode)
                 return new BaseResponse(clientOptions, response, content);
