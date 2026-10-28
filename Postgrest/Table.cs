@@ -600,7 +600,7 @@ namespace Supabase.Postgrest
             var request = Send(_method, null, headers, cancellationToken);
             Clear();
 
-            var response = await request;
+            var response = await request.ConfigureAwait(false);
             var countStr = response.ResponseMessage?.Content.Headers.GetValues("Content-Range").FirstOrDefault();
 
             // Returns X-Y/COUNT [0-3/4]
@@ -624,7 +624,7 @@ namespace Supabase.Postgrest
 
             try
             {
-                var result = await request;
+                var result = await request.ConfigureAwait(false);
                 return result.Models.FirstOrDefault();
             }
             catch (PostgrestException e)

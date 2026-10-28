@@ -41,7 +41,8 @@ namespace Supabase.Postgrest
         public static async Task<ModeledResponse<T>> MakeRequest<T>(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerSettings serializerSettings, object? data = null,
             Dictionary<string, string>? headers = null, Func<Dictionary<string, string>>? getHeaders = null, CancellationToken cancellationToken = default) where T : BaseModel, new()
         {
-            var baseResponse = await MakeRequest(clientOptions, method, url, serializerSettings, data, headers, cancellationToken);
+            // Deserialize off the caller's context: on Unity's main thread this JSON work hitches frames.
+            var baseResponse = await MakeRequest(clientOptions, method, url, serializerSettings, data, headers, cancellationToken).ConfigureAwait(false);
             return new ModeledResponse<T>(baseResponse, serializerSettings, getHeaders);
         }
 
@@ -95,7 +96,7 @@ namespace Supabase.Postgrest
             }
 
             using var response = await Client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
-            var content = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
                 return new BaseResponse(clientOptions, response, content);

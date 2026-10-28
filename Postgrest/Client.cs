@@ -107,7 +107,7 @@ namespace Supabase.Postgrest
         /// <inheritdoc />
         public async Task<TModeledResponse?> Rpc<TModeledResponse>(string procedureName, object? parameters = null)
         {
-            var response = await Rpc(procedureName, parameters);
+            var response = await Rpc(procedureName, parameters).ConfigureAwait(false);
 
             return string.IsNullOrEmpty(response.Content) ? default : JsonConvert.DeserializeObject<TModeledResponse>(response.Content!);
         }
